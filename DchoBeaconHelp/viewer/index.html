@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beacon Web Viewer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>Beacon Web Viewer</h1>
+        <p>Pulled live from your online Beacon API.</p>
+      </header>
+
+      <section class="panel controls">
+        <div class="field">
+          <label for="apiBaseUrl">API Base URL</label>
+          <input id="apiBaseUrl" type="text" value="http://127.0.0.1:8000" />
+        </div>
+        <div class="field">
+          <label for="scannerId">Scanner Filter (optional)</label>
+          <input id="scannerId" type="text" placeholder="my-laptop-collector" />
+        </div>
+        <div class="field small">
+          <label for="limit">Limit</label>
+          <input id="limit" type="number" min="1" max="1000" value="100" />
+        </div>
+        <div class="actions">
+          <button id="refreshBtn">Refresh</button>
+          <button id="toggleAutoBtn">Pause Auto Refresh</button>
+        </div>
+      </section>
+
+      <section class="stats">
+        <article class="panel stat">
+          <h2>Total Beacons</h2>
+          <p id="totalBeacons">0</p>
+        </article>
+        <article class="panel stat">
+          <h2>Strong Signals (>= -70)</h2>
+          <p id="strongSignals">0</p>
+        </article>
+        <article class="panel stat">
+          <h2>Last Refresh</h2>
+          <p id="lastRefresh">-</p>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="section-title-row">
+          <h2>Estimated Beacon Location View</h2>
+          <p class="hint">Scanner at center. Beacons are positioned by estimated distance.</p>
+        </div>
+        <div class="map-wrap">
+          <svg id="locationMap" viewBox="0 0 600 600" role="img" aria-label="Beacon location map">
+            <g id="mapGrid"></g>
+            <g id="mapPoints"></g>
+          </svg>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title-row">
+          <h2>Latest Beacons</h2>
+          <p class="hint">Click a row to load beacon history.</p>
+        </div>
+        <div id="status" class="status">Ready.</div>
+        <div class="table-wrap">
+          <table id="beaconsTable">
+            <thead>
+              <tr>
+                <th>Beacon ID</th>
+                <th>MAC</th>
+                <th>Scanner</th>
+                <th>RSSI (raw/smoothed)</th>
+                <th>Tx</th>
+                <th>Confidence</th>
+                <th>Samples</th>
+                <th>Distance (m)</th>
+                <th>Observed At</th>
+              </tr>
+            </thead>
+            <tbody id="beaconsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Selected Beacon History</h2>
+        <p id="historyLabel" class="hint">No beacon selected.</p>
+        <div class="table-wrap">
+          <table id="historyTable">
+            <thead>
+              <tr>
+                <th>Observed At</th>
+                <th>MAC</th>
+                <th>Scanner</th>
+                <th>RSSI (raw/smoothed)</th>
+                <th>Tx</th>
+                <th>Confidence</th>
+                <th>Samples</th>
+                <th>Distance (m)</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script src="./main.js"></script>
+  </body>
+</html>
